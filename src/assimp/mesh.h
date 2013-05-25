@@ -160,8 +160,13 @@ struct aiFace
 
 		delete[] mIndices;
 		mNumIndices = o.mNumIndices;
-		mIndices = new unsigned int[mNumIndices];
-		::memcpy( mIndices, o.mIndices, mNumIndices * sizeof( unsigned int));
+		if (mNumIndices) {
+			mIndices = new unsigned int[mNumIndices];
+			::memcpy( mIndices, o.mIndices, mNumIndices * sizeof( unsigned int));
+		}
+		else {
+			mIndices = NULL;
+		}
 		return *this;
 	}
 
@@ -314,7 +319,7 @@ enum aiPrimitiveType
 	 *  compiler to map this enum to a 32 Bit integer.
 	 */
 #ifndef SWIG
-	_aiPrimitiveType_Force32Bit = 0x9fffffff
+	_aiPrimitiveType_Force32Bit = INT_MAX
 #endif
 }; //! enum aiPrimitiveType
 
